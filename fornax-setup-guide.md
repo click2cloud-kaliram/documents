@@ -51,6 +51,7 @@ apt install -y make gcc jq
 ## Clone a repo of https://github.com/CentaurusInfra/fornax, sync to the branch/commit to test. & Build the binaries of edgecore and cloudcore using the commands
 
 git clone  https://github.com/CentaurusInfra/fornax
+
 cd fornax
 
 make WHAT=cloudcore
@@ -86,7 +87,7 @@ build/tools/certgen.sh genCertAndKey server 192.168.4.51 192.168.4.52 192.168.4.
 
 
 5. Install CRDs  In Node A, B, C,
-```
+
 kubectl apply -f build/crds/devices/devices_v1alpha2_device.yaml
 kubectl apply -f build/crds/devices/devices_v1alpha2_devicemodel.yaml 
 
@@ -99,7 +100,7 @@ kubectl apply -f  build/crds/router/router_v1_ruleEndpoint.yaml
 kubectl apply -f build/crds/edgecluster/mission_v1.yaml
 kubectl apply -f build/crds/edgecluster/edgecluster_v1.yaml
 
-```
+
 # Start CloudCore in machine A
 
 _output/local/bin/cloudcore
@@ -253,6 +254,9 @@ make WHAT=edgecore
 
 cp [Cluster_D_kubeconfig_file] /root/edgecluster.kubeconfig
 _output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
+
+chmod a+x tests/edgecluster/hack/update_edgecore_config.sh
+
 tests/edgecluster/hack/update_edgecore_config.sh [cluster_C_kubeconfig_file]
 ```
 
