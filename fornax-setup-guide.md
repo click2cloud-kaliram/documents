@@ -2,7 +2,7 @@
 
 This doc describeds how to setup test clusters for the 2021-8-30 Fornax release test, whose test cases are given in the release_testplan.md in the same folder as this doc. 
 
-This test requires four clusters, denoted as A,B,C and D.  A,B,C are kubernetes clusters created using kubeadm, while cluster D is an arktos cluster started by running script arktos-up.sh (https://github.com/CentaurusInfra/arktos/blob/master/hack/arktos-up.sh). These clusters are configured in a hierarchical topology, where Cluster B is an edge cluster to Cluster A, C edge to B, and D edge to C. 
+This test requires four clusters, denoted as A,B,C and D.  A,B,C are kubernetes clusters created using kubeadm, while cluster D is an arktos cluster started by running script arktos-up.sh https://github.com/Click2Cloud-Centaurus/arktos/blob/guide-cni-updates/docs/setup-guide/arktos-with-mizar-cni.md .  These clusters are configured in a hierarchical topology, where Cluster B is an edge cluster to Cluster A, C edge to B, and D edge to C. 
 
 Machine A is referred as the "root operator machine" in these two docs.
 
@@ -16,9 +16,9 @@ Machine A is referred as the "root operator machine" in these two docs.
 
 3. Open the port of 6443 in the security group of of machine A, B, C and D.
 
-4. In machine A, B, C, create a Kubernetes cluster following doc https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/.
+4. In machine A, B, C, create a Kubernetes cluster following doc https://github.com/click2cloud-kaliram/documents/blob/main/kubernetes_cluster_setup.md   or Offical doc https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/.
 
-5. In machine D, clone the repo https://github.com/CentaurusInfra/arktos/ and start an Arktos cluster byt running the script arktos-up.sh.
+5. In machine D, clone the repo https://github.com/Click2Cloud-Centaurus/arktos.git and start an Arktos cluster byt running the script arktos-up.sh.
 
 ## Kubeedge Configuration
 
@@ -33,9 +33,13 @@ Copy the kubeconfig files of cluster A, B, C and D to the root operator machine.
 #   Install Golang
 
 sudo wget https://storage.googleapis.com/golang/go1.15.4.linux-amd64.tar.gz
+
 sudo tar -C /usr/local -xzf go1.15.4.linux-amd64.tar.gz
+
 sudo echo 'export PATH=$PATH:/usr/local/go/bin' >> $HOME/.profile
+
 sudo echo 'export GOPATH=$HOME/gopath' >> $HOME/.profile
+
 source $HOME/.profile
 
 
@@ -61,7 +65,9 @@ make WHAT=edgecore
 ## config cloudcore 
 
 cp /etc/kubernetes/admin.conf /root/.kube/config
+
 mkdir -p /etc/kubeedge/config
+
 _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 
 
@@ -73,13 +79,18 @@ _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 ```
 
 build/tools/certgen.sh genCA IP_A IP_B IP_C IP_D
+
 build/tools/certgen.sh genCertAndKey server IP_A IP_B IP_C IP_D
 
 ```
 #Example
+
 mkdir -p /etc/kubeedge/ca
+
 mkdir -p /etc/kubeedge/certs
+
 build/tools/certgen.sh genCA 192.168.4.51 192.168.4.52 192.168.4.53 192.168.4.54
+
 build/tools/certgen.sh genCertAndKey server 192.168.4.51 192.168.4.52 192.168.4.53 192.168.4.54
 
 
@@ -89,15 +100,19 @@ build/tools/certgen.sh genCertAndKey server 192.168.4.51 192.168.4.52 192.168.4.
 5. Install CRDs  In Node A, B, C,
 
 kubectl apply -f build/crds/devices/devices_v1alpha2_device.yaml
+
 kubectl apply -f build/crds/devices/devices_v1alpha2_devicemodel.yaml 
 
 kubectl apply -f build/crds/reliablesyncs/cluster_objectsync_v1alpha1.yaml
+
 kubectl apply -f build/crds/reliablesyncs/objectsync_v1alpha1.yaml 
 
 kubectl apply -f  build/crds/router/router_v1_rule.yaml
+
 kubectl apply -f  build/crds/router/router_v1_ruleEndpoint.yaml
 
 kubectl apply -f build/crds/edgecluster/mission_v1.yaml
+
 kubectl apply -f build/crds/edgecluster/edgecluster_v1.yaml
 
 
@@ -110,12 +125,14 @@ _output/local/bin/cloudcore
 # In machine B
 
 #Copy Certificate from Machine A
+
 mkdir -p /etc/kubeedge/ca
+
 mkdir -p /etc/kubeedge/certs
  
 scp -r <node-a ip >:/etc/kubeedge/ca /etc/kubeedge/ca
-scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
 
+scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
 
 
 git clone  https://github.com/CentaurusInfra/fornax
@@ -130,19 +147,23 @@ make WHAT=edgecore
 1)  config cloudcore 
 ```
 cp /etc/kubernetes/admin.conf /root/.kube/config
-mkdir -p /etc/kubeedge/config
-_output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
+
+ mkdir -p /etc/kubeedge/config
+
+ _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 
 ```
 2) config edgecore
 ```
 cp /etc/kubernetes/admin.conf /root/edgecluster.kubeconfig
-_output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
+
+ _output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
 
 ```
 3)  test cluster config
 ```
 chmod a+x tests/edgecluster/hack/update_edgecore_config.sh
+
 tests/edgecluster/hack/update_edgecore_config.sh [cluster_A_kubeconfig_file]
 
 
@@ -233,6 +254,12 @@ _output/local/bin/cloudcore
 
 
 ### In machine D
+ 
+# arktos cluster started by running script arktos-up.sh 
+ 
+ https://github.com/Click2Cloud-Centaurus/arktos/blob/guide-cni-updates/docs/setup-guide/arktos-with-mizar-cni.md
+ 
+ 
 
 #Copy Certificate from Machine A
  
