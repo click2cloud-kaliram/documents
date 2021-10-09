@@ -2,7 +2,7 @@
 
 This doc describeds how to setup test clusters for the 2021-8-30 Fornax release test, whose test cases are given in the release_testplan.md in the same folder as this doc. 
 
-This test requires four clusters, denoted as A,B,C and D.  A,B,C are kubernetes clusters created using kubeadm, while cluster D is an arktos cluster started by running script arktos-up.sh (https://github.com/CentaurusInfra/arktos/blob/master/hack/arktos-up.sh). These clusters are configured in a hierarchical topology, where Cluster B is an edge cluster to Cluster A, C edge to B, and D edge to C. 
+This test requires four clusters, denoted as A,B,C and D.  A,B,C are kubernetes clusters created using kubeadm, while cluster D is an arktos cluster started by running script arktos-up.sh https://github.com/Click2Cloud-Centaurus/arktos/blob/guide-cni-updates/docs/setup-guide/arktos-with-mizar-cni.md .  These clusters are configured in a hierarchical topology, where Cluster B is an edge cluster to Cluster A, C edge to B, and D edge to C. 
 
 Machine A is referred as the "root operator machine" in these two docs.
 
@@ -16,9 +16,9 @@ Machine A is referred as the "root operator machine" in these two docs.
 
 3. Open the port of 6443 in the security group of of machine A, B, C and D.
 
-4. In machine A, B, C, create a Kubernetes cluster following doc https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/.
+4. In machine A, B, C, create a Kubernetes cluster following doc https://github.com/click2cloud-kaliram/documents/blob/main/kubernetes_cluster_setup.md   or Offical doc https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/.
 
-5. In machine D, clone the repo https://github.com/CentaurusInfra/arktos/ and start an Arktos cluster byt running the script arktos-up.sh.
+5. In machine D, clone the repo https://github.com/Click2Cloud-Centaurus/arktos.git and start an Arktos cluster byt running the script arktos-up.sh.
 
 ## Kubeedge Configuration
 
@@ -253,6 +253,12 @@ _output/local/bin/cloudcore
 
 
 ### In machine D
+ 
+# arktos cluster started by running script arktos-up.sh 
+ 
+ https://github.com/Click2Cloud-Centaurus/arktos/blob/guide-cni-updates/docs/setup-guide/arktos-with-mizar-cni.md
+ 
+ 
 
 #Copy Certificate from Machine A
  
