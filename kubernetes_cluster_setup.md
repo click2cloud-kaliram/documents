@@ -1,8 +1,3 @@
-# Set hostname , DNS or local hosts file...
-hostnamectl set-hostname node-a
-
-
-
 # Install docker 
 
 apt-get remove -y docker docker-engine docker.io containerd runc
