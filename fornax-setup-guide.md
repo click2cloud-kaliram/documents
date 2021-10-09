@@ -33,9 +33,13 @@ Copy the kubeconfig files of cluster A, B, C and D to the root operator machine.
 #   Install Golang
 
 sudo wget https://storage.googleapis.com/golang/go1.15.4.linux-amd64.tar.gz
+
 sudo tar -C /usr/local -xzf go1.15.4.linux-amd64.tar.gz
+
 sudo echo 'export PATH=$PATH:/usr/local/go/bin' >> $HOME/.profile
+
 sudo echo 'export GOPATH=$HOME/gopath' >> $HOME/.profile
+
 source $HOME/.profile
 
 
@@ -60,7 +64,9 @@ make WHAT=edgecore
 ## config cloudcore 
 
 cp /etc/kubernetes/admin.conf /root/.kube/config
+
 mkdir -p /etc/kubeedge/config
+
 _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 
 
@@ -72,13 +78,18 @@ _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 ```
 
 build/tools/certgen.sh genCA IP_A IP_B IP_C IP_D
+
 build/tools/certgen.sh genCertAndKey server IP_A IP_B IP_C IP_D
 
 ```
 #Example
+
 mkdir -p /etc/kubeedge/ca
+
 mkdir -p /etc/kubeedge/certs
+
 build/tools/certgen.sh genCA 192.168.4.51 192.168.4.52 192.168.4.53 192.168.4.54
+
 build/tools/certgen.sh genCertAndKey server 192.168.4.51 192.168.4.52 192.168.4.53 192.168.4.54
 
 
@@ -88,15 +99,19 @@ build/tools/certgen.sh genCertAndKey server 192.168.4.51 192.168.4.52 192.168.4.
 5. Install CRDs  In Node A, B, C,
 ```
 kubectl apply -f build/crds/devices/devices_v1alpha2_device.yaml
+
 kubectl apply -f build/crds/devices/devices_v1alpha2_devicemodel.yaml 
 
 kubectl apply -f build/crds/reliablesyncs/cluster_objectsync_v1alpha1.yaml
+
 kubectl apply -f build/crds/reliablesyncs/objectsync_v1alpha1.yaml 
 
 kubectl apply -f  build/crds/router/router_v1_rule.yaml
+
 kubectl apply -f  build/crds/router/router_v1_ruleEndpoint.yaml
 
 kubectl apply -f build/crds/edgecluster/mission_v1.yaml
+
 kubectl apply -f build/crds/edgecluster/edgecluster_v1.yaml
 
 ```
@@ -109,12 +124,14 @@ _output/local/bin/cloudcore
 # In machine B
 
 #Copy Certificate from Machine A
+
 mkdir -p /etc/kubeedge/ca
+
 mkdir -p /etc/kubeedge/certs
  
 scp -r <node-a ip >:/etc/kubeedge/ca /etc/kubeedge/ca
-scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
 
+scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
 
 
 git clone  https://github.com/CentaurusInfra/fornax
@@ -129,19 +146,23 @@ make WHAT=edgecore
 1)  config cloudcore 
 ```
 cp /etc/kubernetes/admin.conf /root/.kube/config
-mkdir -p /etc/kubeedge/config
-_output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
+
+ mkdir -p /etc/kubeedge/config
+
+ _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 
 ```
 2) config edgecore
 ```
 cp /etc/kubernetes/admin.conf /root/edgecluster.kubeconfig
-_output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
+
+ _output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
 
 ```
 3)  test cluster config
 ```
 chmod a+x tests/edgecluster/hack/update_edgecore_config.sh
+
 tests/edgecluster/hack/update_edgecore_config.sh [cluster_A_kubeconfig_file]
 
 
