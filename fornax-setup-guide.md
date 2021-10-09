@@ -305,9 +305,14 @@ chmod a+x /root/fornax/_output/local/bin/kubectl/vanilla/kubectl
 _output/local/bin/edgecore --edgecluster
 
 
-# 	open other terminal  verify that the edge-cluster
+#open other terminal  verify that the edge-cluster
 
 kubectl get edgeclusters
+ 
+#For Testing  refer below link
+ https://github.com/click2cloud-kaliram/documents/blob/main/release_testplan.md
+ 
+ 
 
 
 
