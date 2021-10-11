@@ -24,6 +24,7 @@ Machine A is referred as the "root operator machine" in these two docs.
 
 ### Kubeonfig File Preparation
 
+
 Copy the admin kubeconfig file of cluster A to machine B, the kubecofig file of cluster B to the machine of cluster C, and the kubeconfig file of cluster C to the machine of cluster D.
 
 Copy the kubeconfig files of cluster A, B, C and D to the root operator machine.
@@ -97,7 +98,7 @@ build/tools/certgen.sh genCertAndKey server 192.168.4.51 192.168.4.52 192.168.4.
 
 
 
-5. Install CRDs  In Node A, B, C,
+# Install CRDs  In Node A, B, C,
 
 kubectl apply -f build/crds/devices/devices_v1alpha2_device.yaml
 
@@ -130,9 +131,9 @@ mkdir -p /etc/kubeedge/ca
 
 mkdir -p /etc/kubeedge/certs
  
-scp -r <node-a ip >:/etc/kubeedge/ca /etc/kubeedge/ca
+scp -r node-a-ip:/etc/kubeedge/ca /etc/kubeedge/ca
 
-scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
+scp -r node-a-ip:/etc/kubeedge/certs /etc/kubeedge/certs
 
 
 git clone  https://github.com/CentaurusInfra/fornax
@@ -169,7 +170,7 @@ tests/edgecluster/hack/update_edgecore_config.sh [cluster_A_kubeconfig_file]
 
 #Example using scp
 
-scp <nodeA-ip>:/etc/kubernetes/admin.conf /root/node-a.conf
+scp  nodea-ip:/etc/kubernetes/admin.conf /root/node-a.conf
 
 tests/edgecluster/hack/update_edgecore_config.sh /root/node-a.conf
 
@@ -199,8 +200,8 @@ _output/local/bin/cloudcore
 mkdir -p /etc/kubeedge/ca
 mkdir -p /etc/kubeedge/certs
  
-scp -r <node-a ip >:/etc/kubeedge/ca /etc/kubeedge/ca
-scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
+scp -r node-a-ip:/etc/kubeedge/ca /etc/kubeedge/ca
+scp -r node-a-ip:/etc/kubeedge/certs /etc/kubeedge/certs
 
 
 git clone  https://github.com/CentaurusInfra/fornax
@@ -266,8 +267,8 @@ _output/local/bin/cloudcore
 mkdir -p /etc/kubeedge/ca
 mkdir -p /etc/kubeedge/certs
  
-scp -r <node-a ip >:/etc/kubeedge/ca /etc/kubeedge/ca
-scp -r <node-a ip >:/etc/kubeedge/certs /etc/kubeedge/certs
+scp -r node-a-ip:/etc/kubeedge/ca /etc/kubeedge/ca
+scp -r node-a-ip:/etc/kubeedge/certs /etc/kubeedge/certs
 
 git clone  https://github.com/CentaurusInfra/fornax
 
