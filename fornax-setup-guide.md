@@ -197,10 +197,13 @@ _output/local/bin/cloudcore
 ### In machine C  ######
 
 #Copy Certificate from Machine A
+
 mkdir -p /etc/kubeedge/ca
+
 mkdir -p /etc/kubeedge/certs
  
 scp -r node-a-ip:/etc/kubeedge/ca /etc/kubeedge/ca
+
 scp -r node-a-ip:/etc/kubeedge/certs /etc/kubeedge/certs
 
 
@@ -216,13 +219,16 @@ make WHAT=edgecore
 1)  config cloudcore 
 ```
 cp /etc/kubernetes/admin.conf /root/.kube/config
+
 mkdir -p /etc/kubeedge/config
+
 _output/local/bin/cloudcore --minconfig > /etc/kubeedge/config/cloudcore.yaml
 
 ```
 2) config edgecore
 ```
 cp /etc/kubernetes/admin.conf /root/edgecluster.kubeconfig
+
 _output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
 
 ```
@@ -265,9 +271,11 @@ _output/local/bin/cloudcore
 #Copy Certificate from Machine A
  
 mkdir -p /etc/kubeedge/ca
+
 mkdir -p /etc/kubeedge/certs
  
 scp -r node-a-ip:/etc/kubeedge/ca /etc/kubeedge/ca
+
 scp -r node-a-ip:/etc/kubeedge/certs /etc/kubeedge/certs
 
 git clone  https://github.com/CentaurusInfra/fornax
@@ -281,6 +289,7 @@ make WHAT=edgecore
 ```
 
 cp [Cluster_D_kubeconfig_file] /root/edgecluster.kubeconfig
+
 _output/local/bin/edgecore --edgeclusterconfig > /etc/kubeedge/config/edgecore.yaml
 
 chmod a+x tests/edgecluster/hack/update_edgecore_config.sh
